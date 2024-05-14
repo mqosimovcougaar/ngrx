@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from "./auth";
+import { authGuard } from './auth';
 
 export const routes: Routes = [
   {
@@ -9,32 +9,44 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.routes').then((home) => home.HOME_ROUTES),
+    loadChildren: () =>
+      import('./home/home.routes').then(home => home.HOME_ROUTES),
   },
   {
     path: 'login',
-    loadComponent: () => import('./auth/login/login.component').then((c) => c.LoginComponent),
+    loadComponent: () =>
+      import('./auth/login/login.component').then(c => c.LoginComponent),
   },
   {
     path: 'register',
-    loadComponent: () => import('./auth/register/register.component').then((c) => c.RegisterComponent),
+    loadComponent: () =>
+      import('./auth/register/register.component').then(
+        c => c.RegisterComponent
+      ),
   },
   {
     path: 'article',
-    loadChildren: () => import('./articles/article/article.routes').then((m) => m.ARTICLE_ROUTES),
+    loadChildren: () =>
+      import('./articles/article/article.routes').then(m => m.ARTICLE_ROUTES),
   },
   {
     path: 'settings',
     loadComponent: () =>
-      import('./settings/settings.component').then((c) => c.SettingsComponent),
+      import('./settings/settings.component').then(c => c.SettingsComponent),
   },
   {
     path: 'editor',
-    loadChildren: () => import('./articles/article-edit/article-edit.routes').then((article) => article.ARTICLE_EDIT_ROUTES),
+    loadChildren: () =>
+      import('./articles/article-edit/article-edit.routes').then(
+        article => article.ARTICLE_EDIT_ROUTES
+      ),
     canActivate: [authGuard],
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.routes').then((profile) => profile.PROFILE_ROUTES),
+    loadChildren: () =>
+      import('./profile/profile.routes').then(
+        profile => profile.PROFILE_ROUTES
+      ),
   },
 ];

@@ -1,5 +1,11 @@
 import { Field, formsActions, ngrxFormsQuery } from '../../core/forms';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -11,8 +17,8 @@ import { MarkdownPipe } from './pipes/markdown.pipe';
 import { ArticleCommentComponent } from './article-comment/article-comment.component';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 import { Store } from '@ngrx/store';
-import { Article, User } from "../../core/api-types";
-import { RouterModule } from "@angular/router";
+import { Article, User } from '../../core/api-types';
+import { RouterModule } from '@angular/router';
 
 const structure: Field[] = [
   {
@@ -31,7 +37,14 @@ const structure: Field[] = [
   standalone: true,
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss'],
-  imports: [CommonModule, RouterModule, ArticleMetaComponent, ArticleCommentComponent, MarkdownPipe, AddCommentComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ArticleMetaComponent,
+    ArticleCommentComponent,
+    MarkdownPipe,
+    AddCommentComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleComponent implements OnInit, OnDestroy {
@@ -52,9 +65,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.store
       .select(selectAuthState)
       .pipe(
-        filter((auth) => auth.loggedIn),
-        (auth$) => combineLatest([auth$, this.store.select(articleQuery.getAuthorUsername)]),
-        untilDestroyed(this),
+        filter(auth => auth.loggedIn),
+        auth$ =>
+          combineLatest([
+            auth$,
+            this.store.select(articleQuery.getAuthorUsername),
+          ]),
+        untilDestroyed(this)
       )
       .subscribe(([auth, username]) => {
         this.canModify = auth.user.username === username;

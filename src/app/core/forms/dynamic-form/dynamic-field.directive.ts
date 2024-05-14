@@ -1,4 +1,13 @@
-import { ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef, inject } from '@angular/core';
+import {
+  ComponentRef,
+  Directive,
+  Input,
+  OnChanges,
+  OnInit,
+  Type,
+  ViewContainerRef,
+  inject,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { Field } from '../+state/forms.interfaces';
@@ -31,7 +40,9 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.component = this.container.createComponent(componentsMapper[this.field.type]);
+    this.component = this.container.createComponent(
+      componentsMapper[this.field.type]
+    );
     this.component.instance.field = this.field;
     this.component.instance.group = this.group;
   }

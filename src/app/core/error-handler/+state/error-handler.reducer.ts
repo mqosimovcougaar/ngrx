@@ -22,6 +22,6 @@ export const errorHandlerFeature = createFeature({
     on(errorHandlerActions.throw404Error, (_, action) => ({
       code: action.error.status,
       message: action.error.message,
-    })),
+    }))
   ),
 });

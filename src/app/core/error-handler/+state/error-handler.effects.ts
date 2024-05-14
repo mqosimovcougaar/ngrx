@@ -10,10 +10,10 @@ export const error401$ = createEffect(
       ofType(errorHandlerActions.throw401Error),
       tap(() => {
         router.navigate(['/login']);
-      }),
+      })
     );
   },
-  { functional: true, dispatch: false },
+  { functional: true, dispatch: false }
 );
 
 export const error404$ = createEffect(
@@ -22,8 +22,8 @@ export const error404$ = createEffect(
       ofType(errorHandlerActions.throw404Error),
       tap(() => {
         router.navigate(['/']);
-      }),
+      })
     );
   },
-  { functional: true, dispatch: false },
+  { functional: true, dispatch: false }
 );

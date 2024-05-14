@@ -12,7 +12,10 @@ describe('SettingsService', () => {
     });
   });
 
-  it('should be created', inject([SettingsService], (service: SettingsService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [SettingsService],
+    (service: SettingsService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

@@ -11,8 +11,8 @@ export class ArticleGuardService implements CanActivate {
 
   waitForArticleToLoad(): Observable<boolean> {
     return this.store.select(articleQuery.selectLoaded).pipe(
-      filter((loaded) => loaded),
-      take(1),
+      filter(loaded => loaded),
+      take(1)
     );
   }
 
@@ -20,6 +20,8 @@ export class ArticleGuardService implements CanActivate {
     const slug = route.params['slug'];
     this.store.dispatch(articleActions.loadArticle({ slug }));
 
-    return this.waitForArticleToLoad().pipe(tap(() => this.store.dispatch(articleActions.loadComments({ slug }))));
+    return this.waitForArticleToLoad().pipe(
+      tap(() => this.store.dispatch(articleActions.loadComments({ slug })))
+    );
   }
 }

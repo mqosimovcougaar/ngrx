@@ -1,5 +1,17 @@
-import { DynamicFormComponent, Field, formsActions, ListErrorsComponent, ngrxFormsQuery } from '../../core/forms';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  DynamicFormComponent,
+  Field,
+  formsActions,
+  ListErrorsComponent,
+  ngrxFormsQuery,
+} from '../../core/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { authActions } from '../../auth';

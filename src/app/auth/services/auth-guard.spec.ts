@@ -25,7 +25,12 @@ describe('authGuard', () => {
           },
         ]),
       ],
-      providers: [{ provide: LocalStorageJwtService, useValue: { getItem: () => of('token') } }],
+      providers: [
+        {
+          provide: LocalStorageJwtService,
+          useValue: { getItem: () => of('token') },
+        },
+      ],
     });
 
     storage = TestBed.inject(LocalStorageJwtService);

@@ -11,12 +11,14 @@ import { concatMap, map, tap } from 'rxjs/operators';
 import { SettingsService } from './settings.service';
 
 @Injectable()
-export class SettingsStoreService extends ComponentStore<Record<string, unknown>> {
+export class SettingsStoreService extends ComponentStore<
+  Record<string, unknown>
+> {
   constructor(
     private readonly settingsService: SettingsService,
     private readonly localStorageJwtService: LocalStorageJwtService,
     private readonly router: Router,
-    private readonly store: Store,
+    private readonly store: Store
   ) {
     super({});
   }
@@ -27,11 +29,13 @@ export class SettingsStoreService extends ComponentStore<Record<string, unknown>
       concatLatestFrom(() => [this.store.select(ngrxFormsQuery.selectData)]),
       concatMap(([, data]) =>
         this.settingsService.update(data).pipe(
-          tap((result) => this.router.navigate(['profile', result.user.username])),
-          tap((result) => this.localStorageJwtService.setItem(result.user.token)),
-          map(() => this.store.dispatch(authActions.getUser())),
-        ),
-      ),
-    ),
+          tap(result =>
+            this.router.navigate(['profile', result.user.username])
+          ),
+          tap(result => this.localStorageJwtService.setItem(result.user.token)),
+          map(() => this.store.dispatch(authActions.getUser()))
+        )
+      )
+    )
   );
 }

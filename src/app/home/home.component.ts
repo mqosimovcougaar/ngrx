@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  inject,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
   articleListInitialState,
@@ -13,7 +18,7 @@ import { ArticleListComponent } from '../articles/article-list/article-list.comp
 import { HomeStoreService } from './home.store';
 import { provideComponentStore } from '@ngrx/component-store';
 import { Store } from '@ngrx/store';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -37,14 +42,18 @@ export class HomeComponent implements OnInit {
     this.store
       .select(selectLoggedIn)
       .pipe(untilDestroyed(this))
-      .subscribe((isLoggedIn) => {
+      .subscribe(isLoggedIn => {
         this.isAuthenticated = isLoggedIn;
         this.getArticles();
       });
   }
 
   setListTo(type: ListType = 'ALL') {
-    this.store.dispatch(articleListActions.setListConfig({ config: { ...articleListInitialState.listConfig, type } }));
+    this.store.dispatch(
+      articleListActions.setListConfig({
+        config: { ...articleListInitialState.listConfig, type },
+      })
+    );
   }
 
   getArticles() {
@@ -65,7 +74,7 @@ export class HomeComponent implements OnInit {
             tag,
           },
         },
-      }),
+      })
     );
   }
 }

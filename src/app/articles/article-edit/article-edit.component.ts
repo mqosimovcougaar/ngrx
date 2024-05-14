@@ -1,10 +1,25 @@
-import { DynamicFormComponent, Field, formsActions, ListErrorsComponent, ngrxFormsQuery } from '../../core/forms';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import {
+  DynamicFormComponent,
+  Field,
+  formsActions,
+  ListErrorsComponent,
+  ngrxFormsQuery,
+} from '../../core/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
-import { articleActions, articleEditActions, articleQuery } from '../../articles';
+import {
+  articleActions,
+  articleEditActions,
+  articleQuery,
+} from '../../articles';
 
 const structure: Field[] = [
   {
@@ -54,7 +69,9 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
     this.store
       .select(articleQuery.selectData)
       .pipe(untilDestroyed(this))
-      .subscribe((article) => this.store.dispatch(formsActions.setData({ data: article })));
+      .subscribe(article =>
+        this.store.dispatch(formsActions.setData({ data: article }))
+      );
   }
 
   updateForm(changes: any) {

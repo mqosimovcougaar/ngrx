@@ -14,13 +14,15 @@ export const unFollow$ = createEffect(
       ofType(articleActions.unfollow),
       concatMap(({ username }) =>
         actionsService.unfollowUser(username).pipe(
-          map((response) => articleActions.unfollowSuccess({ profile: response.profile })),
-          catchError((error) => of(articleActions.unfollowFailure(error))),
-        ),
-      ),
+          map(response =>
+            articleActions.unfollowSuccess({ profile: response.profile })
+          ),
+          catchError(error => of(articleActions.unfollowFailure(error)))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const follow$ = createEffect(
@@ -29,13 +31,15 @@ export const follow$ = createEffect(
       ofType(articleActions.follow),
       concatMap(({ username }) =>
         actionsService.followUser(username).pipe(
-          map((response) => articleActions.followSuccess({ profile: response.profile })),
-          catchError((error) => of(articleActions.followFailure(error))),
-        ),
-      ),
+          map(response =>
+            articleActions.followSuccess({ profile: response.profile })
+          ),
+          catchError(error => of(articleActions.followFailure(error)))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const deleteComment$ = createEffect(
@@ -44,92 +48,104 @@ export const deleteComment$ = createEffect(
       ofType(articleActions.deleteComment),
       concatMap(({ commentId, slug }) =>
         articlesService.deleteComment(commentId, slug).pipe(
-          map((_) => articleActions.deleteCommentSuccess({ commentId })),
-          catchError((error) => of(articleActions.deleteCommentFailure(error))),
-        ),
-      ),
+          map(_ => articleActions.deleteCommentSuccess({ commentId })),
+          catchError(error => of(articleActions.deleteCommentFailure(error)))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const addComment$ = createEffect(
-  (actions$ = inject(Actions), articlesService = inject(ArticlesService), store = inject(Store)) => {
+  (
+    actions$ = inject(Actions),
+    articlesService = inject(ArticlesService),
+    store = inject(Store)
+  ) => {
     return actions$.pipe(
       ofType(articleActions.addComment),
       concatLatestFrom(() => store.select(ngrxFormsQuery.selectData)),
       exhaustMap(([{ slug }, data]) =>
         articlesService.addComment(slug, data.comment).pipe(
-          map((response) => articleActions.addCommentSuccess({ comment: response.comment })),
-          catchError(({ error }) => of(formsActions.setErrors({ errors: error.errors }))),
-        ),
-      ),
+          map(response =>
+            articleActions.addCommentSuccess({ comment: response.comment })
+          ),
+          catchError(({ error }) =>
+            of(formsActions.setErrors({ errors: error.errors }))
+          )
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const addCommentSuccess$ = createEffect(
   (actions$ = inject(Actions)) => {
     return actions$.pipe(
       ofType(articleActions.addCommentSuccess),
-      map(() => formsActions.resetForm()),
+      map(() => formsActions.resetForm())
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const loadArticle$ = createEffect(
   (actions$ = inject(Actions), articlesService = inject(ArticlesService)) => {
     return actions$.pipe(
       ofType(articleActions.loadArticle),
-      concatMap((action) =>
+      concatMap(action =>
         articlesService.getArticle(action.slug).pipe(
-          map((response) => articleActions.loadArticleSuccess({ article: response.article })),
-          catchError((error) => of(articleActions.loadArticleFailure(error))),
-        ),
-      ),
+          map(response =>
+            articleActions.loadArticleSuccess({ article: response.article })
+          ),
+          catchError(error => of(articleActions.loadArticleFailure(error)))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const loadComments$ = createEffect(
   (actions$ = inject(Actions), articlesService = inject(ArticlesService)) => {
     return actions$.pipe(
       ofType(articleActions.loadComments),
-      concatMap((action) =>
+      concatMap(action =>
         articlesService.getComments(action.slug).pipe(
-          map((data) => articleActions.loadCommentsSuccess({ comments: data.comments })),
-          catchError((error) => of(articleActions.loadCommentsFailure(error))),
-        ),
-      ),
+          map(data =>
+            articleActions.loadCommentsSuccess({ comments: data.comments })
+          ),
+          catchError(error => of(articleActions.loadCommentsFailure(error)))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const deleteArticle$ = createEffect(
   (actions$ = inject(Actions), articlesService = inject(ArticlesService)) => {
     return actions$.pipe(
       ofType(articleActions.deleteArticle),
-      concatMap((action) =>
+      concatMap(action =>
         articlesService.deleteArticle(action.slug).pipe(
           map(() => articleActions.deleteArticleSuccess()),
-          catchError((error) => of(articleActions.deleteArticleFailure(error))),
-        ),
-      ),
+          catchError(error => of(articleActions.deleteArticleFailure(error)))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const deleteArticleSuccess$ = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => {
     return actions$.pipe(
       ofType(articleActions.deleteArticleSuccess),
-      tap(() => router.navigate(['/'])),
+      tap(() => router.navigate(['/']))
     );
   },
-  { functional: true, dispatch: false },
+  { functional: true, dispatch: false }
 );

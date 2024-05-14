@@ -26,7 +26,11 @@ describe('AuthEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({}), HttpClientTestingModule, RouterTestingModule],
+      imports: [
+        StoreModule.forRoot({}),
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ],
       providers: [
         AuthEffects,
         provideMockActions(() => actions$),
@@ -145,7 +149,7 @@ describe('AuthEffects', () => {
       const loginSuccessAction = authActions.loginSuccess({ user: result });
       actions$ = of(loginSuccessAction);
 
-      effects.loginOrRegisterSuccess$.subscribe((a) => {
+      effects.loginOrRegisterSuccess$.subscribe(a => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('/');
         done();
       });
@@ -165,7 +169,7 @@ describe('AuthEffects', () => {
       });
       actions$ = of(registerSuccessAction);
 
-      effects.loginOrRegisterSuccess$.subscribe((a) => {
+      effects.loginOrRegisterSuccess$.subscribe(a => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('/');
         expect(storage.setItem).toHaveBeenCalledWith(result.token);
         done();

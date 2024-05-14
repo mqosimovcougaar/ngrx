@@ -9,16 +9,20 @@ import { formsActions, ngrxFormsQuery } from '../../core/forms';
 import { Store } from '@ngrx/store';
 
 export const logout$ = createEffect(
-  (actions$ = inject(Actions), localStorageJwtService = inject(LocalStorageJwtService), router = inject(Router)) => {
+  (
+    actions$ = inject(Actions),
+    localStorageJwtService = inject(LocalStorageJwtService),
+    router = inject(Router)
+  ) => {
     return actions$.pipe(
       ofType(authActions.logout),
       tap(() => {
         localStorageJwtService.removeItem();
         router.navigateByUrl('login');
-      }),
+      })
     );
   },
-  { functional: true, dispatch: false },
+  { functional: true, dispatch: false }
 );
 
 export const getUser$ = createEffect(
@@ -27,56 +31,72 @@ export const getUser$ = createEffect(
       ofType(authActions.getUser),
       switchMap(() =>
         authService.user().pipe(
-          map((data) => authActions.getUserSuccess({ user: data.user })),
-          catchError((error) => of(authActions.getUserFailure({ error }))),
-        ),
-      ),
+          map(data => authActions.getUserSuccess({ user: data.user })),
+          catchError(error => of(authActions.getUserFailure({ error })))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const login$ = createEffect(
-  (actions$ = inject(Actions), authService = inject(AuthService), store = inject(Store)) => {
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    store = inject(Store)
+  ) => {
     return actions$.pipe(
       ofType(authActions.login),
       concatLatestFrom(() => store.select(ngrxFormsQuery.selectData)),
       exhaustMap(([, data]) =>
         authService.login(data).pipe(
-          map((response) => authActions.loginSuccess({ user: response.user })),
-          catchError((result) => of(formsActions.setErrors({ errors: result.error.errors }))),
-        ),
-      ),
+          map(response => authActions.loginSuccess({ user: response.user })),
+          catchError(result =>
+            of(formsActions.setErrors({ errors: result.error.errors }))
+          )
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const loginOrRegisterSuccess$ = createEffect(
-  (actions$ = inject(Actions), localStorageJwtService = inject(LocalStorageJwtService), router = inject(Router)) => {
+  (
+    actions$ = inject(Actions),
+    localStorageJwtService = inject(LocalStorageJwtService),
+    router = inject(Router)
+  ) => {
     return actions$.pipe(
       ofType(authActions.loginSuccess, authActions.registerSuccess),
-      tap((action) => {
+      tap(action => {
         localStorageJwtService.setItem(action.user.token);
         router.navigateByUrl('/');
-      }),
+      })
     );
   },
-  { functional: true, dispatch: false },
+  { functional: true, dispatch: false }
 );
 
 export const register$ = createEffect(
-  (actions$ = inject(Actions), authService = inject(AuthService), store = inject(Store)) => {
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    store = inject(Store)
+  ) => {
     return actions$.pipe(
       ofType(authActions.register),
       concatLatestFrom(() => store.select(ngrxFormsQuery.selectData)),
       exhaustMap(([, data]) =>
         authService.register(data).pipe(
-          map((response) => authActions.registerSuccess({ user: response.user })),
-          catchError((result) => of(formsActions.setErrors({ errors: result.error.errors }))),
-        ),
-      ),
+          map(response => authActions.registerSuccess({ user: response.user })),
+          catchError(result =>
+            of(formsActions.setErrors({ errors: result.error.errors }))
+          )
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );

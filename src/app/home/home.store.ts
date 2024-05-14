@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ComponentStore, OnStateInit, tapResponse } from '@ngrx/component-store';
+import {
+  ComponentStore,
+  OnStateInit,
+  tapResponse,
+} from '@ngrx/component-store';
 import { Observable, pipe } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { HomeService } from './home.service';
@@ -9,7 +13,10 @@ export interface HomeState {
 }
 
 @Injectable()
-export class HomeStoreService extends ComponentStore<HomeState> implements OnStateInit {
+export class HomeStoreService
+  extends ComponentStore<HomeState>
+  implements OnStateInit
+{
   constructor(private readonly homeService: HomeService) {
     super({ tags: [] });
   }
@@ -19,7 +26,7 @@ export class HomeStoreService extends ComponentStore<HomeState> implements OnSta
   }
 
   // SELECTORS
-  tags$: Observable<string[]> = this.select((store) => store.tags);
+  tags$: Observable<string[]> = this.select(store => store.tags);
 
   // EFFECTS
   readonly getTags = this.effect<void>(
@@ -27,15 +34,15 @@ export class HomeStoreService extends ComponentStore<HomeState> implements OnSta
       switchMap(() =>
         this.homeService.getTags().pipe(
           tapResponse(
-            (response) => {
+            response => {
               this.patchState({ tags: response.tags });
             },
-            (error) => {
+            error => {
               console.error('error getting tags: ', error);
-            },
-          ),
-        ),
-      ),
-    ),
+            }
+          )
+        )
+      )
+    )
   );
 }

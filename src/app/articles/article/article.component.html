@@ -9,8 +9,7 @@
         (favorite)="favorite($event)"
         (unfavorite)="unfavorite($event)"
         (delete)="delete($event)"
-        [canModify]="canModify"
-      >
+        [canModify]="canModify">
       </cdt-article-meta>
     </div>
   </div>
@@ -30,8 +29,7 @@
         (favorite)="favorite($event)"
         (unfavorite)="unfavorite($event)"
         (delete)="delete($event)"
-        [canModify]="canModify"
-      ></cdt-article-meta>
+        [canModify]="canModify"></cdt-article-meta>
     </div>
 
     <div class="row">
@@ -44,13 +42,13 @@
           [currentUser]="currentUser$ | async"
           [touchedForm$]="touchedForm$"
           (submitComment)="submit($event)"
-          (updateForm)="updateForm($event)"
-        >
+          (updateForm)="updateForm($event)">
         </cdt-add-comment>
 
         <div *ngIf="(isAuthenticated$ | async) === false">
-          <a [routerLink]="['/login']">Sign in</a> or <a [routerLink]="['/register']">sign up</a> to add comments on
-          this article.
+          <a [routerLink]="['/login']">Sign in</a> or
+          <a [routerLink]="['/register']">sign up</a> to add comments on this
+          article.
         </div>
 
         <cdt-article-comment
@@ -58,8 +56,7 @@
           [currentUser]="currentUser$ | async"
           (delete)="deleteComment($event)"
           [article]="article$ | async"
-          [comment]="comment"
-        ></cdt-article-comment>
+          [comment]="comment"></cdt-article-comment>
       </div>
     </div>
   </div>

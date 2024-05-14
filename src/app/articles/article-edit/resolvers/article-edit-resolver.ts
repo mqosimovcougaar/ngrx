@@ -4,7 +4,9 @@ import { Store } from '@ngrx/store';
 import { articleActions } from '../../../articles';
 import { of } from 'rxjs';
 
-export const articleEditResolver: ResolveFn<boolean> = (route: ActivatedRouteSnapshot) => {
+export const articleEditResolver: ResolveFn<boolean> = (
+  route: ActivatedRouteSnapshot
+) => {
   const slug = route.params['slug'];
   const store = inject(Store);
 

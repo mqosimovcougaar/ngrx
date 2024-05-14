@@ -2,7 +2,12 @@ import { ApiService } from '../../core/http-client';
 import { UserResponse } from '../../core/api-types';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginUser, LoginUserRequest, NewUserRequest, NewUser } from '../../core/api-types';
+import {
+  LoginUser,
+  LoginUserRequest,
+  NewUserRequest,
+  NewUser,
+} from '../../core/api-types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,10 +18,15 @@ export class AuthService {
   }
 
   login(credentials: LoginUser): Observable<UserResponse> {
-    return this.apiService.post<UserResponse, LoginUserRequest>('/users/login', { user: credentials });
+    return this.apiService.post<UserResponse, LoginUserRequest>(
+      '/users/login',
+      { user: credentials }
+    );
   }
 
   register(credentials: NewUser): Observable<UserResponse> {
-    return this.apiService.post<UserResponse, NewUserRequest>('/users', { user: credentials });
+    return this.apiService.post<UserResponse, NewUserRequest>('/users', {
+      user: credentials,
+    });
   }
 }

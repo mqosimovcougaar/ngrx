@@ -6,15 +6,13 @@
       (unFavorite)="unFavorite($event)"
       (favorite)="favorite($event)"
       *ngFor="let article of articles$ | async"
-      [article]="article"
-    >
+      [article]="article">
     </cdt-article-list-item>
 
     <cdt-pager
       (setPage)="setPage($event)"
       [currentPage]="(listConfig$ | async)?.currentPage"
-      [totalPages]="totalPages$ | async"
-    ></cdt-pager>
+      [totalPages]="totalPages$ | async"></cdt-pager>
   </ng-container>
 
   <ng-template #noArticles>

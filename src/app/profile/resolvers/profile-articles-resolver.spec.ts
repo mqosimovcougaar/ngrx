@@ -3,9 +3,14 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { profileArticlesResolver } from './profile-articles-resolver';
 import { cold } from 'jasmine-marbles';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { articleListActions, articleListInitialState } from '@realworld/articles/data-access';
+import {
+  articleListActions,
+  articleListInitialState,
+} from '@realworld/articles/data-access';
 
-const mockRoute: ActivatedRouteSnapshot = { params: { username: 'stef' } } as unknown as ActivatedRouteSnapshot;
+const mockRoute: ActivatedRouteSnapshot = {
+  params: { username: 'stef' },
+} as unknown as ActivatedRouteSnapshot;
 
 describe('profileArticlesResolver', () => {
   let store: MockStore;
@@ -22,7 +27,7 @@ describe('profileArticlesResolver', () => {
     const dispatchSpy = jest.spyOn(store, 'dispatch');
 
     const result = TestBed.runInInjectionContext(
-      () => profileArticlesResolver(mockRoute, {} as RouterStateSnapshot) as any,
+      () => profileArticlesResolver(mockRoute, {} as RouterStateSnapshot) as any
     );
     expect(dispatchSpy).toHaveBeenCalledWith(
       articleListActions.setListConfig({
@@ -33,7 +38,7 @@ describe('profileArticlesResolver', () => {
             author: 'stef',
           },
         },
-      }),
+      })
     );
     expect(result).toBeObservable(cold('(a|)', { a: true }));
   });

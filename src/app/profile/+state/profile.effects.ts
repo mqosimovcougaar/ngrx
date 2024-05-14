@@ -1,7 +1,15 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ActionsService } from '../../articles';
-import { catchError, concatMap, groupBy, map, mergeMap, of, switchMap } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  groupBy,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+} from 'rxjs';
 import { ProfileService } from '../profile.service';
 import { profileActions } from './profile.actions';
 
@@ -9,51 +17,57 @@ export const unFollow$ = createEffect(
   (actions$ = inject(Actions), actionsService = inject(ActionsService)) => {
     return actions$.pipe(
       ofType(profileActions.unfollow),
-      map((action) => action.id),
-      concatMap((slug) =>
+      map(action => action.id),
+      concatMap(slug =>
         actionsService.unfollowUser(slug).pipe(
-          map((response) => profileActions.unfollowSuccess({ profile: response.profile })),
-          catchError((error) => of(profileActions.unfollowFailure({ error }))),
-        ),
-      ),
+          map(response =>
+            profileActions.unfollowSuccess({ profile: response.profile })
+          ),
+          catchError(error => of(profileActions.unfollowFailure({ error })))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const follow$ = createEffect(
   (actions$ = inject(Actions), actionsService = inject(ActionsService)) => {
     return actions$.pipe(
       ofType(profileActions.follow),
-      map((action) => action.id),
-      concatMap((slug) =>
+      map(action => action.id),
+      concatMap(slug =>
         actionsService.followUser(slug).pipe(
-          map((response) => profileActions.followSuccess({ profile: response.profile })),
-          catchError((error) => of(profileActions.followFailure({ error }))),
-        ),
-      ),
+          map(response =>
+            profileActions.followSuccess({ profile: response.profile })
+          ),
+          catchError(error => of(profileActions.followFailure({ error })))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const getProfile$ = createEffect(
   (actions$ = inject(Actions), profileService = inject(ProfileService)) => {
     return actions$.pipe(
       ofType(profileActions.loadProfile),
-      groupBy((action) => action.id),
-      mergeMap((group) =>
+      groupBy(action => action.id),
+      mergeMap(group =>
         group.pipe(
-          map((action) => action.id),
-          switchMap((username) =>
+          map(action => action.id),
+          switchMap(username =>
             profileService.getProfile(username).pipe(
-              map((profile) => profileActions.loadProfileSuccess({ profile })),
-              catchError((error) => of(profileActions.loadProfileFailure({ error }))),
-            ),
-          ),
-        ),
-      ),
+              map(profile => profileActions.loadProfileSuccess({ profile })),
+              catchError(error =>
+                of(profileActions.loadProfileFailure({ error }))
+              )
+            )
+          )
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );

@@ -2,7 +2,11 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { articleListActions, articleListQuery, articlesActions } from '../../articles';
+import {
+  articleListActions,
+  articleListQuery,
+  articlesActions,
+} from '../../articles';
 import { ArticleListItemComponent } from './article-list-item/article-list-item.component';
 import { PagerComponent } from '../../core/components/pager/pager.component';
 

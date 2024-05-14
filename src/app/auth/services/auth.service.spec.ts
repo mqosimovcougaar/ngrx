@@ -10,7 +10,12 @@ describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthService, ApiService, LocalStorageJwtService, MockProvider(ApiService)],
+      providers: [
+        AuthService,
+        ApiService,
+        LocalStorageJwtService,
+        MockProvider(ApiService),
+      ],
     });
   });
 

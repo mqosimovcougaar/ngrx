@@ -35,19 +35,23 @@ export const authFeature = createFeature({
       user: action.user,
     })),
     on(authActions.getUserFailure, authActions.logout, () => authInitialState),
-    on(authActions.login, authActions.register, (state) => ({
+    on(authActions.login, authActions.register, state => ({
       ...state,
       status: Status.IN_PROGRESS,
     })),
-    on(authActions.registerSuccess, authActions.loginSuccess, (state, action) => ({
+    on(
+      authActions.registerSuccess,
+      authActions.loginSuccess,
+      (state, action) => ({
+        ...state,
+        loggedIn: true,
+        status: Status.INIT,
+        user: action.user,
+      })
+    ),
+    on(authActions.registerFailure, authActions.loginFailure, state => ({
       ...state,
-      loggedIn: true,
       status: Status.INIT,
-      user: action.user,
-    })),
-    on(authActions.registerFailure, authActions.loginFailure, (state) => ({
-      ...state,
-      status: Status.INIT,
-    })),
+    }))
   ),
 });

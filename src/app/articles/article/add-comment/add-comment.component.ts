@@ -1,6 +1,16 @@
 import { Article, User } from '../../../core/api-types';
-import { DynamicFormComponent, Field, ListErrorsComponent } from '../../../core/forms';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  DynamicFormComponent,
+  Field,
+  ListErrorsComponent,
+} from '../../../core/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { Subject, combineLatest } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -34,9 +39,9 @@ export class ProfileComponent implements OnInit {
           this.following = p.following;
         }),
         map(([p, u]) => p.username === u.username),
-        untilDestroyed(this),
+        untilDestroyed(this)
       )
-      .subscribe((isUser) => this.isUser$.next(isUser));
+      .subscribe(isUser => this.isUser$.next(isUser));
   }
 
   toggleFollowing() {

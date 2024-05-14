@@ -10,39 +10,45 @@ export const setListPage$ = createEffect(
   (actions$ = inject(Actions)) => {
     return actions$.pipe(
       ofType(articleListActions.setListPage),
-      map(() => articleListActions.loadArticles()),
+      map(() => articleListActions.loadArticles())
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const setListTag$ = createEffect(
   (actions$ = inject(Actions)) => {
     return actions$.pipe(
       ofType(articleListActions.setListConfig),
-      map(() => articleListActions.loadArticles()),
+      map(() => articleListActions.loadArticles())
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const loadArticles$ = createEffect(
-  (actions$ = inject(Actions), store = inject(Store), articlesService = inject(ArticlesService)) => {
+  (
+    actions$ = inject(Actions),
+    store = inject(Store),
+    articlesService = inject(ArticlesService)
+  ) => {
     return actions$.pipe(
       ofType(articleListActions.loadArticles),
       concatLatestFrom(() => store.select(articleListQuery.selectListConfig)),
       concatMap(([_, config]) =>
         articlesService.query(config).pipe(
-          map((results) =>
+          map(results =>
             articleListActions.loadArticlesSuccess({
               articles: results.articles,
               articlesCount: results.articlesCount,
-            }),
+            })
           ),
-          catchError((error) => of(articleListActions.loadArticlesFailure({ error }))),
-        ),
-      ),
+          catchError(error =>
+            of(articleListActions.loadArticlesFailure({ error }))
+          )
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );

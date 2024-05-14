@@ -1,6 +1,19 @@
 import { Field } from '../+state/forms.interfaces';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Observable, combineLatest } from 'rxjs';
 import { debounceTime, map, tap, filter } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -29,18 +42,18 @@ export class DynamicFormComponent implements OnInit {
     this.structure$
       .pipe(
         map(this.formBuilder),
-        tap((f) => (this.form = f)),
-        tap((f) => this.listenFormChanges(f)),
-        (f$) => combineLatest([f$, this.data$]),
-        untilDestroyed(this),
+        tap(f => (this.form = f)),
+        tap(f => this.listenFormChanges(f)),
+        f$ => combineLatest([f$, this.data$]),
+        untilDestroyed(this)
       )
       .subscribe(this.patchValue);
 
     if (this.touchedForm$) {
       this.touchedForm$
         .pipe(
-          filter((t) => !t && !!this.form),
-          untilDestroyed(this),
+          filter(t => !t && !!this.form),
+          untilDestroyed(this)
         )
         .subscribe(() => this.form.reset());
     }
@@ -48,7 +61,9 @@ export class DynamicFormComponent implements OnInit {
 
   private formBuilder = (structure: Field[]): FormGroup => {
     const group = this.fb.group({});
-    structure.forEach((field) => group.addControl(field.name, this.control(field)));
+    structure.forEach(field =>
+      group.addControl(field.name, this.control(field))
+    );
     return group;
   };
 
@@ -57,7 +72,9 @@ export class DynamicFormComponent implements OnInit {
   };
 
   private patchValue = ([form, data]: [FormGroup, any]) => {
-    data ? form.patchValue(data, { emitEvent: false }) : form.patchValue({}, { emitEvent: false });
+    data
+      ? form.patchValue(data, { emitEvent: false })
+      : form.patchValue({}, { emitEvent: false });
   };
 
   private listenFormChanges(form: FormGroup) {

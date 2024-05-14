@@ -9,7 +9,10 @@ export const ARTICLE_ROUTES: Routes = [
   {
     path: ':slug',
     component: ArticleComponent,
-    providers: [provideState(articleFeature), provideEffects(articleEffects, articlesEffects)],
+    providers: [
+      provideState(articleFeature),
+      provideEffects(articleEffects, articlesEffects),
+    ],
     canActivate: [ArticleGuardService],
   },
 ];

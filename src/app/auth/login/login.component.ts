@@ -1,9 +1,21 @@
-import { DynamicFormComponent, Field, formsActions, ListErrorsComponent, ngrxFormsQuery } from '../../core/forms';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  DynamicFormComponent,
+  Field,
+  formsActions,
+  ListErrorsComponent,
+  ngrxFormsQuery,
+} from '../../core/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { authActions } from "../+state/auth.actions";
+import { authActions } from '../+state/auth.actions';
 
 const structure: Field[] = [
   {

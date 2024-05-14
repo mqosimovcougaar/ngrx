@@ -1,4 +1,10 @@
-import { Component, Input, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { Article, User } from '../../../core/api-types';
 import { Comment } from '../../index';
 import { CommonModule } from '@angular/common';

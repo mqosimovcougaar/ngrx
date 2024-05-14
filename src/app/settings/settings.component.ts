@@ -1,5 +1,16 @@
-import { DynamicFormComponent, Field, formsActions, ListErrorsComponent, ngrxFormsQuery } from '../core/forms';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import {
+  DynamicFormComponent,
+  Field,
+  formsActions,
+  ListErrorsComponent,
+  ngrxFormsQuery,
+} from '../core/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { authActions, selectUser } from '../auth';
@@ -65,7 +76,9 @@ export class SettingsComponent implements OnInit {
     this.store
       .select(selectUser)
       .pipe(untilDestroyed(this))
-      .subscribe((user) => this.store.dispatch(formsActions.setData({ data: user })));
+      .subscribe(user =>
+        this.store.dispatch(formsActions.setData({ data: user }))
+      );
   }
 
   updateForm(changes: any) {

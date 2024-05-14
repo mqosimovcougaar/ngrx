@@ -5,7 +5,9 @@ import { of } from 'rxjs';
 
 import { profileActions } from '../+state/profile.actions';
 
-export const profileResolver: ResolveFn<boolean> = (route: ActivatedRouteSnapshot) => {
+export const profileResolver: ResolveFn<boolean> = (
+  route: ActivatedRouteSnapshot
+) => {
   const username = route.params['username'];
   const store = inject(Store);
 

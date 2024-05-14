@@ -12,19 +12,21 @@ export const publishArticle$ = createEffect(
     actions$ = inject(Actions),
     articlesService = inject(ArticlesService),
     store = inject(Store),
-    router = inject(Router),
+    router = inject(Router)
   ) => {
     return actions$.pipe(
       ofType(articleEditActions.publishArticle),
       concatLatestFrom(() => store.select(ngrxFormsQuery.selectData)),
       concatMap(([_, data]) =>
         articlesService.publishArticle(data).pipe(
-          tap((result) => router.navigate(['article', result.article.slug])),
+          tap(result => router.navigate(['article', result.article.slug])),
           map(() => articleEditActions.publishArticleSuccess()),
-          catchError((result) => of(formsActions.setErrors({ errors: result.error.errors }))),
-        ),
-      ),
+          catchError(result =>
+            of(formsActions.setErrors({ errors: result.error.errors }))
+          )
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );

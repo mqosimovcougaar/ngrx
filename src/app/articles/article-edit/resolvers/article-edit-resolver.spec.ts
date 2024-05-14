@@ -5,7 +5,9 @@ import { cold } from 'jasmine-marbles';
 import { articleActions } from '../../../articles';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
-const mockRoute: ActivatedRouteSnapshot = { params: { slug: '1' } } as unknown as ActivatedRouteSnapshot;
+const mockRoute: ActivatedRouteSnapshot = {
+  params: { slug: '1' },
+} as unknown as ActivatedRouteSnapshot;
 
 describe('articleEditResolver', () => {
   let store: MockStore;
@@ -22,15 +24,17 @@ describe('articleEditResolver', () => {
     const dispatchSpy = jest.spyOn(store, 'dispatch');
 
     const result = TestBed.runInInjectionContext(
-      () => articleEditResolver(mockRoute, {} as RouterStateSnapshot) as any,
+      () => articleEditResolver(mockRoute, {} as RouterStateSnapshot) as any
     );
-    expect(dispatchSpy).toHaveBeenCalledWith(articleActions.loadArticle({ slug: '1' }));
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      articleActions.loadArticle({ slug: '1' })
+    );
     expect(result).toBeObservable(cold('(a|)', { a: true }));
   });
 
   it('should just return `true` when slug is undefined', () => {
     const result = TestBed.runInInjectionContext(
-      () => articleEditResolver(mockRoute, {} as RouterStateSnapshot) as any,
+      () => articleEditResolver(mockRoute, {} as RouterStateSnapshot) as any
     );
     expect(result).toBeObservable(cold('(a|)', { a: true }));
   });

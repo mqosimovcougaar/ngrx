@@ -24,7 +24,8 @@ describe('profileFavoritesResolver', () => {
     const dispatchSpy = jest.spyOn(store, 'dispatch');
 
     const result = TestBed.runInInjectionContext(
-      () => profileFavoritesResolver(mockRoute, {} as RouterStateSnapshot) as any,
+      () =>
+        profileFavoritesResolver(mockRoute, {} as RouterStateSnapshot) as any
     );
     expect(dispatchSpy).toHaveBeenCalledWith(
       articleListActions.setListConfig({
@@ -35,7 +36,7 @@ describe('profileFavoritesResolver', () => {
             favorited: 'stef',
           },
         },
-      }),
+      })
     );
     expect(result).toBeObservable(cold('(a|)', { a: true }));
   });

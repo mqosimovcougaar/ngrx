@@ -78,7 +78,11 @@ describe('ArticleEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({}), HttpClientTestingModule, RouterTestingModule.withRoutes([])],
+      imports: [
+        StoreModule.forRoot({}),
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([]),
+      ],
       providers: [
         ArticleEffects,
         provideMockActions(() => actions$),
@@ -96,7 +100,9 @@ describe('ArticleEffects', () => {
 
   describe('loadArticle$', () => {
     it('should return a loadArticleSuccess action when we dispatch the getArticle request is succesful', () => {
-      const loadArticleAction = articleActions.loadArticle({ slug: 'Create-a-new-implementation-1' });
+      const loadArticleAction = articleActions.loadArticle({
+        slug: 'Create-a-new-implementation-1',
+      });
       const loadArticleSuccessAction = articleActions.loadArticleSuccess({
         article: mockArticle,
       });
@@ -113,7 +119,9 @@ describe('ArticleEffects', () => {
         name: 'error',
         message: 'error message ',
       };
-      const loadArticleAction = articleActions.loadArticle({ slug: 'Create-a-new-implementation-1' });
+      const loadArticleAction = articleActions.loadArticle({
+        slug: 'Create-a-new-implementation-1',
+      });
       const loadArticleFailureAction = articleActions.loadArticleFailure({
         error,
       });
@@ -129,14 +137,18 @@ describe('ArticleEffects', () => {
 
   describe('loadComments$', () => {
     it('should return a loadComments action when we dispatch the getComments request is succesful', () => {
-      const loadCommentsAction = articleActions.loadComments({ slug: 'Create-a-new-implementation-1' });
+      const loadCommentsAction = articleActions.loadComments({
+        slug: 'Create-a-new-implementation-1',
+      });
       const loadCommentsSuccessAction = articleActions.loadCommentsSuccess({
         comments: mockComments,
       });
 
       actions$ = hot('-a', { a: loadCommentsAction });
       const expected = cold('-b', { b: loadCommentsSuccessAction });
-      articlesService.getComments = jest.fn(() => of({ comments: mockComments }));
+      articlesService.getComments = jest.fn(() =>
+        of({ comments: mockComments })
+      );
 
       expect(effects.loadComments$).toBeObservable(expected);
     });
@@ -146,7 +158,9 @@ describe('ArticleEffects', () => {
         name: 'error',
         message: 'error message ',
       };
-      const loadCommentsAction = articleActions.loadComments({ slug: 'Create-a-new-implementation-1' });
+      const loadCommentsAction = articleActions.loadComments({
+        slug: 'Create-a-new-implementation-1',
+      });
       const loadCommentsfailureAction = articleActions.loadCommentsFailure({
         error,
       });
@@ -162,7 +176,9 @@ describe('ArticleEffects', () => {
 
   describe('deleteArticle$', () => {
     it('should return a deleteArticleSuccess action when delete an article succesfully', () => {
-      const deleteArticleAction = articleActions.deleteArticle({ slug: 'Create-a-new-implementation-1' });
+      const deleteArticleAction = articleActions.deleteArticle({
+        slug: 'Create-a-new-implementation-1',
+      });
       const deleteArticleSuccessAction = articleActions.deleteArticleSuccess();
 
       actions$ = hot('-a', { a: deleteArticleAction });
@@ -172,7 +188,7 @@ describe('ArticleEffects', () => {
       expect(effects.deleteArticle$).toBeObservable(expected);
     });
 
-    xit('should navigate to the home page when an article is deleted', (done) => {
+    xit('should navigate to the home page when an article is deleted', done => {
       const deleteArticleSuccessAction = articleActions.deleteArticleSuccess();
       const navigateSpy = jest.spyOn(router, 'navigate');
 
@@ -189,7 +205,9 @@ describe('ArticleEffects', () => {
         name: 'error',
         message: 'error message ',
       };
-      const deleteArticleAction = articleActions.deleteArticle({ slug: 'Create-a-new-implementation-1' });
+      const deleteArticleAction = articleActions.deleteArticle({
+        slug: 'Create-a-new-implementation-1',
+      });
       const deleteArticleFailureAction = articleActions.deleteArticleFailure({
         error,
       });
@@ -205,8 +223,13 @@ describe('ArticleEffects', () => {
 
   describe('deleteComment$', () => {
     it('should return a deleteCommentSuccess action when delete a comment succesfully', () => {
-      const deleteCommentAction = articleActions.deleteComment({ commentId: 5, slug: 'Create-a-new-implementation-1' });
-      const deleteCommentSuccessAction = articleActions.deleteCommentSuccess({ commentId: 5 });
+      const deleteCommentAction = articleActions.deleteComment({
+        commentId: 5,
+        slug: 'Create-a-new-implementation-1',
+      });
+      const deleteCommentSuccessAction = articleActions.deleteCommentSuccess({
+        commentId: 5,
+      });
 
       actions$ = hot('-a', { a: deleteCommentAction });
       const expected = cold('-b', { b: deleteCommentSuccessAction });
@@ -220,7 +243,10 @@ describe('ArticleEffects', () => {
         name: 'error',
         message: 'error message ',
       };
-      const deleteCommentAction = articleActions.deleteComment({ commentId: 5, slug: 'Create-a-new-implementation-1' });
+      const deleteCommentAction = articleActions.deleteComment({
+        commentId: 5,
+        slug: 'Create-a-new-implementation-1',
+      });
       const deleteCommentFailureAction = articleActions.deleteCommentFailure({
         error,
       });
@@ -236,24 +262,36 @@ describe('ArticleEffects', () => {
 
   describe('addComment$', () => {
     it('should return a addCommentSuccess action when a comment is added succesfully', () => {
-      const addCommentAction = articleActions.addComment({ slug: 'Create-a-new-implementation-1' });
-      const addCommentSuccessAction = articleActions.addCommentSuccess({ comment: mockComments[1] });
+      const addCommentAction = articleActions.addComment({
+        slug: 'Create-a-new-implementation-1',
+      });
+      const addCommentSuccessAction = articleActions.addCommentSuccess({
+        comment: mockComments[1],
+      });
 
       actions$ = hot('-a', { a: addCommentAction });
       const expected = cold('-b', { b: addCommentSuccessAction });
-      articlesService.addComment = jest.fn(() => of({ comment: mockComments[1] }));
+      articlesService.addComment = jest.fn(() =>
+        of({ comment: mockComments[1] })
+      );
 
       expect(effects.addComment$).toBeObservable(expected);
     });
 
     it('should return a addCommentFailure action if the add comment request fails', () => {
-      const addCommentAction = articleActions.addComment({ slug: 'Create-a-new-implementation-1' });
+      const addCommentAction = articleActions.addComment({
+        slug: 'Create-a-new-implementation-1',
+      });
       const setErrorsAction = setErrors({
         errors: { error: 'error' },
       });
 
       actions$ = hot('-a---', { a: addCommentAction });
-      const response = cold('-#', {}, { error: { errors: { error: 'error' } } });
+      const response = cold(
+        '-#',
+        {},
+        { error: { errors: { error: 'error' } } }
+      );
       articlesService.addComment = jest.fn(() => response);
       const expected = cold('--b', { b: setErrorsAction });
 
@@ -263,7 +301,9 @@ describe('ArticleEffects', () => {
 
   describe('addCommentSuccess$', () => {
     it('should return a resetForm action when a comment is added succesfully', () => {
-      const addCommentSuccessAction = articleActions.addCommentSuccess({ comment: mockComments[1] });
+      const addCommentSuccessAction = articleActions.addCommentSuccess({
+        comment: mockComments[1],
+      });
       const resetFormAction = resetForm();
 
       actions$ = hot('-a', { a: addCommentSuccessAction });
@@ -276,7 +316,9 @@ describe('ArticleEffects', () => {
   describe('follow$', () => {
     it('should return a followSuccess action when we follow a user', () => {
       const followAction = articleActions.follow({ username: 'Stef' });
-      const followSuccessAction = articleActions.followSuccess({ profile: mockProfile });
+      const followSuccessAction = articleActions.followSuccess({
+        profile: mockProfile,
+      });
 
       actions$ = hot('-a', { a: followAction });
       const expected = cold('-b', { b: followSuccessAction });
@@ -307,7 +349,9 @@ describe('ArticleEffects', () => {
   describe('unfollow$', () => {
     it('should return a unfollowSuccess action when we unfollow a user', () => {
       const unfollowAction = articleActions.unfollow({ username: 'Stef' });
-      const unfollowSuccessAction = articleActions.unfollowSuccess({ profile: mockProfile });
+      const unfollowSuccessAction = articleActions.unfollowSuccess({
+        profile: mockProfile,
+      });
 
       actions$ = hot('-a', { a: unfollowAction });
       const expected = cold('-b', { b: unfollowSuccessAction });
@@ -337,8 +381,12 @@ describe('ArticleEffects', () => {
 
   describe('favorite$', () => {
     it('should return a favoriteSuccess action when we favorite a user', () => {
-      const favoriteAction = articlesActions.favorite({ slug: 'article title' });
-      const favoriteSuccessAction = articlesActions.favoriteSuccess({ article: mockArticle });
+      const favoriteAction = articlesActions.favorite({
+        slug: 'article title',
+      });
+      const favoriteSuccessAction = articlesActions.favoriteSuccess({
+        article: mockArticle,
+      });
 
       actions$ = hot('-a', { a: favoriteAction });
       const expected = cold('-b', { b: favoriteSuccessAction });
@@ -352,7 +400,9 @@ describe('ArticleEffects', () => {
         name: 'error',
         message: 'error message ',
       };
-      const favoriteAction = articlesActions.favorite({ slug: 'article title' });
+      const favoriteAction = articlesActions.favorite({
+        slug: 'article title',
+      });
       const favoriteSuccessAction = articlesActions.favoriteFailure({ error });
 
       actions$ = hot('-a---', { a: favoriteAction });
@@ -366,8 +416,12 @@ describe('ArticleEffects', () => {
 
   describe('unFavorite$', () => {
     it('should return a unFavoriteSuccess action when we unFavorite a user', () => {
-      const unFavoriteAction = articlesActions.unfavorite({ slug: 'article title' });
-      const unFavoriteSuccessAction = articlesActions.unfavoriteSuccess({ article: mockArticle });
+      const unFavoriteAction = articlesActions.unfavorite({
+        slug: 'article title',
+      });
+      const unFavoriteSuccessAction = articlesActions.unfavoriteSuccess({
+        article: mockArticle,
+      });
 
       actions$ = hot('-a', { a: unFavoriteAction });
       const expected = cold('-b', { b: unFavoriteSuccessAction });
@@ -381,8 +435,12 @@ describe('ArticleEffects', () => {
         name: 'error',
         message: 'error message ',
       };
-      const unfavoriteAction = articlesActions.unfavorite({ slug: 'article title' });
-      const unfavoriteSuccessAction = articlesActions.unfavoriteFailure({ error });
+      const unfavoriteAction = articlesActions.unfavorite({
+        slug: 'article title',
+      });
+      const unfavoriteSuccessAction = articlesActions.unfavoriteFailure({
+        error,
+      });
 
       actions$ = hot('-a---', { a: unfavoriteAction });
       const response = cold('-#', {}, { error });

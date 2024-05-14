@@ -4,7 +4,9 @@ import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
-export const profileFavoritesResolver: ResolveFn<boolean> = (route: ActivatedRouteSnapshot) => {
+export const profileFavoritesResolver: ResolveFn<boolean> = (
+  route: ActivatedRouteSnapshot
+) => {
   const username = route?.parent?.params['username'];
   const store = inject(Store);
 
@@ -17,7 +19,7 @@ export const profileFavoritesResolver: ResolveFn<boolean> = (route: ActivatedRou
           favorited: username,
         },
       },
-    }),
+    })
   );
 
   return of(true);

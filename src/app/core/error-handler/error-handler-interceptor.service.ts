@@ -1,4 +1,9 @@
-import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandlerFn,
+  HttpRequest,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
@@ -7,12 +12,12 @@ import { errorHandlerActions } from './+state/error-handler.actions';
 
 export const errorHandlingInterceptor = (
   request: HttpRequest<any>,
-  next: HttpHandlerFn,
+  next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
   const store = inject(Store);
 
   return next(request).pipe(
-    catchError((error) => {
+    catchError(error => {
       if (error instanceof HttpErrorResponse) {
         switch (error.status) {
           case 401:
@@ -27,6 +32,6 @@ export const errorHandlingInterceptor = (
         }
       }
       return throwError(error);
-    }),
+    })
   );
 };

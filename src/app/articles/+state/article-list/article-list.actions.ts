@@ -10,6 +10,9 @@ export const articleListActions = createActionGroup({
     setListConfig: props<{ config: ArticleListConfig }>(),
     loadArticles: emptyProps(),
     loadArticlesFailure: props<{ error: Error }>(),
-    loadArticlesSuccess: props<{ articles: Article[]; articlesCount: number }>(),
+    loadArticlesSuccess: props<{
+      articles: Article[];
+      articlesCount: number;
+    }>(),
   },
 });

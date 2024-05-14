@@ -10,7 +10,10 @@ export const ARTICLE_EDIT_ROUTES: Routes = [
   {
     path: '',
     component: ArticleEditComponent,
-    providers: [provideState(articleFeature), provideEffects(articleEditEffects)],
+    providers: [
+      provideState(articleFeature),
+      provideEffects(articleEditEffects),
+    ],
     children: [
       {
         path: '',

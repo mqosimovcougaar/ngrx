@@ -4,7 +4,9 @@ import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
-export const profileArticlesResolver: ResolveFn<boolean> = (route: ActivatedRouteSnapshot) => {
+export const profileArticlesResolver: ResolveFn<boolean> = (
+  route: ActivatedRouteSnapshot
+) => {
   const username = route.params['username'];
   const store = inject(Store);
 
@@ -17,7 +19,7 @@ export const profileArticlesResolver: ResolveFn<boolean> = (route: ActivatedRout
           author: username,
         },
       },
-    }),
+    })
   );
 
   return of(true);

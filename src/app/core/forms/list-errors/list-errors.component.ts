@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
@@ -24,8 +31,8 @@ export class ListErrorsComponent implements OnInit, OnDestroy {
     this.store
       .select(ngrxFormsQuery.selectErrors)
       .pipe(untilDestroyed(this))
-      .subscribe((e) => {
-        this.errors = Object.keys(e || {}).map((key) => `${key} ${e[key]}`);
+      .subscribe(e => {
+        this.errors = Object.keys(e || {}).map(key => `${key} ${e[key]}`);
         this.changeDetectorRef.markForCheck();
       });
   }

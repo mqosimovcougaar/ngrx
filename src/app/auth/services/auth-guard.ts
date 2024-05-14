@@ -9,13 +9,13 @@ export const authGuard = () => {
   const storage = inject(LocalStorageJwtService);
 
   return storage.getItem().pipe(
-    map((token) => {
+    map(token => {
       if (!token) {
         router.navigate(['/login']);
         return false;
       }
       return true;
     }),
-    take(1),
+    take(1)
   );
 };

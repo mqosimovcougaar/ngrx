@@ -11,7 +11,11 @@ describe('NgrxFormsEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NgrxFormsEffects, provideMockActions(() => actions), NgrxFormsFacade],
+      providers: [
+        NgrxFormsEffects,
+        provideMockActions(() => actions),
+        NgrxFormsFacade,
+      ],
     });
 
     effects = TestBed.inject(NgrxFormsEffects);

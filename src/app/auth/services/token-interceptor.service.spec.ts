@@ -12,7 +12,10 @@ describe('TokenInterceptorService', () => {
     });
   });
 
-  it('should be created', inject([TokenInterceptorService], (service: TokenInterceptorService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [TokenInterceptorService],
+    (service: TokenInterceptorService) => {
+      expect(service).toBeTruthy();
+    }
+  ));
 });

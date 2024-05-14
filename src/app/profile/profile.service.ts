@@ -9,6 +9,8 @@ export class ProfileService {
   private readonly apiService = inject(ApiService);
 
   getProfile(username: string): Observable<Profile> {
-    return this.apiService.get<ProfileResponse>('/profiles/' + username).pipe(map((data) => data.profile));
+    return this.apiService
+      .get<ProfileResponse>('/profiles/' + username)
+      .pipe(map(data => data.profile));
   }
 }

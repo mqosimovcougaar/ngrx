@@ -10,13 +10,15 @@ export const favorite$ = createEffect(
       ofType(articlesActions.favorite),
       concatMap(({ slug }) =>
         actionsService.favorite(slug).pipe(
-          map((response) => articlesActions.favoriteSuccess({ article: response.article })),
-          catchError((error) => of(articlesActions.favoriteFailure(error))),
-        ),
-      ),
+          map(response =>
+            articlesActions.favoriteSuccess({ article: response.article })
+          ),
+          catchError(error => of(articlesActions.favoriteFailure(error)))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );
 
 export const unFavorite$ = createEffect(
@@ -25,11 +27,13 @@ export const unFavorite$ = createEffect(
       ofType(articlesActions.unfavorite),
       concatMap(({ slug }) =>
         actionsService.unfavorite(slug).pipe(
-          map((response) => articlesActions.unfavoriteSuccess({ article: response.article })),
-          catchError((error) => of(articlesActions.unfavoriteFailure(error))),
-        ),
-      ),
+          map(response =>
+            articlesActions.unfavoriteSuccess({ article: response.article })
+          ),
+          catchError(error => of(articlesActions.unfavoriteFailure(error)))
+        )
+      )
     );
   },
-  { functional: true },
+  { functional: true }
 );

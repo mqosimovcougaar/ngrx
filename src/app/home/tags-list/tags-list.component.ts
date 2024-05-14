@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'cdt-tags-list',
@@ -10,6 +16,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagsListComponent {
-  @Input({transform: (value: string[] | null): string[] => value }) tags: string[] = [];
+  @Input({ transform: (value: string[] | null): string[] => value })
+  tags: string[] = [];
   @Output() setListTag: EventEmitter<string> = new EventEmitter();
 }

@@ -45,7 +45,7 @@ export const articleFeature = createFeature({
       loaded: true,
       loading: false,
     })),
-    on(articleActions.loadArticleFailure, (state) => ({
+    on(articleActions.loadArticleFailure, state => ({
       ...state,
       data: articleInitialState.data,
       loaded: false,
@@ -56,30 +56,40 @@ export const articleFeature = createFeature({
       return { ...state, comments };
     }),
     on(articleActions.deleteCommentSuccess, (state, action) => {
-      const comments: Comment[] = state.comments.filter((item) => item.id !== action.commentId);
+      const comments: Comment[] = state.comments.filter(
+        item => item.id !== action.commentId
+      );
       return { ...state, comments };
     }),
     on(
       articleActions.initializeArticle,
       articleEditActions.publishArticleSuccess,
       articleActions.deleteArticleFailure,
-      (state) => articleInitialState,
+      state => articleInitialState
     ),
     on(articleActions.loadCommentsSuccess, (state, action) => ({
       ...state,
       comments: action.comments,
     })),
-    on(articleActions.loadCommentsFailure, (state) => ({
+    on(articleActions.loadCommentsFailure, state => ({
       ...state,
       comments: articleInitialState.comments,
     })),
-    on(articleActions.followSuccess, articleActions.unfollowSuccess, (state, action) => {
-      const data: Article = { ...state.data, author: action.profile };
-      return { ...state, data };
-    }),
-    on(articlesActions.favoriteSuccess, articlesActions.unfavoriteSuccess, (state, action) => ({
-      ...state,
-      data: action.article,
-    })),
+    on(
+      articleActions.followSuccess,
+      articleActions.unfollowSuccess,
+      (state, action) => {
+        const data: Article = { ...state.data, author: action.profile };
+        return { ...state, data };
+      }
+    ),
+    on(
+      articlesActions.favoriteSuccess,
+      articlesActions.unfavoriteSuccess,
+      (state, action) => ({
+        ...state,
+        data: action.article,
+      })
+    )
   ),
 });

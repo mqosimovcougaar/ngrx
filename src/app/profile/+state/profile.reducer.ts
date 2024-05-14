@@ -16,9 +16,16 @@ export const profileFeature = createFeature({
   name: 'profile',
   reducer: createReducer(
     profileInitialState,
-    on(profileActions.loadProfile, (state) => ({ ...state, loading: true })),
-    on(profileActions.loadProfileSuccess, (state, action) => ({ ...action.profile, loading: false })),
+    on(profileActions.loadProfile, state => ({ ...state, loading: true })),
+    on(profileActions.loadProfileSuccess, (state, action) => ({
+      ...action.profile,
+      loading: false,
+    })),
     on(profileActions.loadProfileFailure, () => profileInitialState),
-    on(profileActions.followSuccess, profileActions.unfollowSuccess, (state, action) => action.profile),
+    on(
+      profileActions.followSuccess,
+      profileActions.unfollowSuccess,
+      (state, action) => action.profile
+    )
   ),
 });

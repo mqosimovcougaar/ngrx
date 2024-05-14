@@ -7,8 +7,8 @@ export const setData$ = createEffect(
   (actions$ = inject(Actions)) => {
     return actions$.pipe(
       ofType(formsActions.setData, formsActions.updateData),
-      map(() => formsActions.initializeErrors()),
+      map(() => formsActions.initializeErrors())
     );
   },
-  { functional: true },
+  { functional: true }
 );
